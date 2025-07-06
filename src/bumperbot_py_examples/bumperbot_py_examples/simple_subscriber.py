@@ -4,21 +4,23 @@ from std_msgs.msg import String
 
 
 class SimpleSubscriber(Node):
+
     def __init__(self):
         super().__init__("simple_subscriber")
-        self.subscriber = self.create_subscription(
-            String, "chatter", self.msgCallback, 10
-        )
-        self.get_logger().info("Simple Subscriber has been started.")
+        self.sub_ = self.create_subscription(String, "chatter", self.msgCallback, 10)
+        self.sub_
 
     def msgCallback(self, msg):
-        self.get_logger().info(f'Received: "{msg.data}"')
+        self.get_logger().info("I heard: %s" % msg.data)
 
 
 def main():
     rclpy.init()
-    simple_subscriber = SimpleSubscriber()
-    rclpy.spin(simple_subscriber)
+
+    simple_publisher = SimpleSubscriber()
+    rclpy.spin(simple_publisher)
+
+    simple_publisher.destroy_node()
     rclpy.shutdown()
 
 
