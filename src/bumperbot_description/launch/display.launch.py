@@ -12,26 +12,23 @@ from launch_ros.parameter_descriptions import ParameterValue
 def generate_launch_description():
     bumperbot_description_dir = get_package_share_directory("bumperbot_description")
 
-    model_arg = DeclareLaunchArgument(
-        name="model",
-        default_value=os.path.join(
-            bumperbot_description_dir, "urdf", "bumperbot.urdf.xacro"
-        ),
-        description="Absolute path to robot urdf file",
-    )
+    model_arg = DeclareLaunchArgument(name="model", default_value=os.path.join(
+                                        bumperbot_description_dir, "urdf", "bumperbot.urdf.xacro"
+                                        ),
+                                      description="Absolute path to robot urdf file")
 
-    robot_description = ParameterValue(
-        Command(["xacro ", LaunchConfiguration("model")]), value_type=str
-    )
+    robot_description = ParameterValue(Command(["xacro ", LaunchConfiguration("model")]),
+                                       value_type=str)
 
     robot_state_publisher_node = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
-        parameters=[{"robot_description": robot_description}],
+        parameters=[{"robot_description": robot_description}]
     )
 
     joint_state_publisher_gui_node = Node(
-        package="joint_state_publisher_gui", executable="joint_state_publisher_gui"
+        package="joint_state_publisher_gui",
+        executable="joint_state_publisher_gui"
     )
 
     rviz_node = Node(
@@ -39,17 +36,12 @@ def generate_launch_description():
         executable="rviz2",
         name="rviz2",
         output="screen",
-        arguments=[
-            "-d",
-            os.path.join(bumperbot_description_dir, "rviz", "display.rviz"),
-        ],
+        arguments=["-d", os.path.join(bumperbot_description_dir, "rviz", "display.rviz")],
     )
 
-    return LaunchDescription(
-        [
-            model_arg,
-            joint_state_publisher_gui_node,
-            robot_state_publisher_node,
-            rviz_node,
-        ]
-    )
+    return LaunchDescription([
+        model_arg,
+        joint_state_publisher_gui_node,
+        robot_state_publisher_node,
+        rviz_node
+    ])

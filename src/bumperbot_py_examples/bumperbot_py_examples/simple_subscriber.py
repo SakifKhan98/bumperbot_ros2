@@ -19,10 +19,10 @@ def main():
 
     simple_publisher = SimpleSubscriber()
     rclpy.spin(simple_publisher)
-
+    
     simple_publisher.destroy_node()
     rclpy.shutdown()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

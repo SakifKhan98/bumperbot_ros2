@@ -11,7 +11,7 @@ class SimplePublisher(Node):
         self.counter_ = 0
         self.frequency_ = 1.0
         self.get_logger().info("Publishing at %d Hz" % self.frequency_)
-
+        
         self.timer_ = self.create_timer(self.frequency_, self.timerCallback)
 
     def timerCallback(self):
@@ -26,10 +26,10 @@ def main():
 
     simple_publisher = SimplePublisher()
     rclpy.spin(simple_publisher)
-
+    
     simple_publisher.destroy_node()
     rclpy.shutdown()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
